@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 
 
+# Opens country file
 countryFile = open('AfricanCountries','r')
 OgList = countryFile.readlines()
 countries = []
@@ -23,7 +24,8 @@ fontColour = '#cadeed'
 window = Tk()
 window.geometry('1200x800')
 window.title("Africa Game")
-#window.resizable(False,False)
+
+# Window.resizable(False,False)
 window.config(bg=bgColour)
 icon = PhotoImage(file='AfricaImage.png')
 window.iconphoto(True, icon)
@@ -43,20 +45,27 @@ def submit(event):
     global rowCounter
     global columnCounter
 
+    # Fetches user input and capitalises it and clears the entry box
     countryName = (countryEntry.get()).upper()
     countryEntry.delete(0,END)
+
+    # Checks if input is a valid country and isn't already guessed
     if (countryName in countries) and (countryName not in inputs):
         inputs.append(countryName)
+
+        # Checks for the next available on the grid
         if columnCounter>2:
             columnCounter = 0
             rowCounter += 1
 
+        # Makes a label with the name of the country and makes it green
         countryNameLabel = Label(tableFrame,
                                  text=countryName,
                                  font=('Comic Sans',15,'bold'),
                                  foreground='green',
                                  background=bgColour)
         
+        # Adds that label to the next available space on the grid
         countryNameLabel.grid(column=columnCounter,
                               row=rowCounter,
                               sticky='nsew',
@@ -64,10 +73,12 @@ def submit(event):
 
         columnCounter += 1
 
+# A function the destroys the current page before displaying the next page
 def deletePage():
     for frame in mainFrame.winfo_children():
         frame.destroy()
 
+# Opens the next page
 def openPage(page):
     deletePage()
     page()
@@ -136,19 +147,20 @@ def menuPage():
                      relief=FLAT,
                      command=window.destroy)
 
+    # Adding the buttons to the grid
     playBtn.grid(row=0,column=0,sticky='nsew',pady=5)
     scoresBtn.grid(row=1,column=0,sticky='nsew',pady=5)
     quitBtn.grid(row=2,column=0,sticky='nsew',pady=5)
+
 
     pg1btnGrid.pack()
 
 
 
 
-# Making Page 2
+# Makes Page 2 (game page)
 def gamePage():
 
-    # Setting Up Page 2
     global countryEntry
     global tableFrame
 
@@ -174,7 +186,7 @@ def gamePage():
     pg2btnGrid.columnconfigure(0, weight=1)
     pg2btnGrid.columnconfigure(1, weight=1)
 
-    
+
     resetBtn = Button(pg2btnGrid,
                      text='FINISH',
                      font=('Comic Sans', 20),
@@ -195,6 +207,7 @@ def gamePage():
     tableFrame.columnconfigure(2,weight=1)
     tableFrame.pack(expand=1,fill=BOTH)
 
+# Making page 4 (score page)
 def scorePage():
     page3 = Frame(mainFrame,bg=bgColour)
     page3.pack(expand=1,fill=BOTH)
@@ -207,6 +220,7 @@ def scorePage():
                   bg=bgColour,
                   fg=fontColour).pack(pady=80)
     
+    #opens the score file and displays all of the scores
     scores = scoreFile.readlines()
     for score in scores:
         scoreLabel = Label(page3,text=(score[:-1])
@@ -215,9 +229,6 @@ def scorePage():
                            bg=bgColour)
         scoreLabel.pack(pady=10)
     
-
-    allScoresFrame = Frame(page3,bg=bgColour)
-    allScoresFrame.columnconfigure(0,weight=1)
 
     menuBtn = Button(page3,
                       text='BACK TO MENU',
@@ -232,7 +243,7 @@ def scorePage():
     menuBtn.pack(pady=80)
 
 
-
+# Makes page 4 (results page)
 def resultsPage():
 
     page4 =  Frame(mainFrame,bg=bgColour)
