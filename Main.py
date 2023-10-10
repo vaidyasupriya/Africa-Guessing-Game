@@ -11,7 +11,7 @@ for country in OgList:
 
 
 # Some Colours
-bgColour = '#252b30'
+bgColour = '#121212'
 btnStaticColour = '#293556'
 btnActiveColour = '#2e4583'
 fontColour = '#cadeed'
@@ -171,7 +171,7 @@ def gamePage():
                   text='Enter African Country',
                   font=('Comic Sans',30,'bold'),
                   bg=bgColour,
-                  fg=fontColour).pack(pady=80)
+                  fg=fontColour).pack(pady=20)
 
 
     # Adding input box for country names
