@@ -74,6 +74,8 @@ def submit(event):
                               padx=10)
 
         columnCounter += 1
+        if len(inputs)==54:
+            openPage(resultsPage)
 
 # A function the destroys the current page before displaying the next page
 def deletePage():
