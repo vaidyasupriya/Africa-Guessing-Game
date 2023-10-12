@@ -197,7 +197,7 @@ def gamePage():
                       font=('Comic Sans',20,'bold'),
                       bg=bgColour,
                       fg=fontColour)
-    liveScore.pack(pady=10)
+    liveScore.pack(pady=5)
 
     page2Title = Label(page2,
                        text='Enter African Country',
@@ -208,7 +208,7 @@ def gamePage():
 
     countryEntry = Entry(page2,
                          font=('Comic Sans',20))
-    countryEntry.pack(pady=5)
+    countryEntry.pack(pady=10)
 
     resetBtn = Button(page2,
                      text='FINISH',
@@ -220,7 +220,7 @@ def gamePage():
                      relief=FLAT,
                      command=lambda: openPage(resultsPage))
     
-    resetBtn.pack(pady=5)
+    resetBtn.pack(pady=15)
 
     tableFrame = Frame(page2,bg=bgColour)
     tableFrame.columnconfigure(0,weight=1)
