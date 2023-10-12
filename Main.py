@@ -111,8 +111,6 @@ def openPage(page):
 def menuPage():
 
     global inputs
-    global rowCounter
-    global columnCounter
 
     rowCounter = 0
     columnCounter = 0
@@ -341,9 +339,13 @@ def saveResultsPage():
     
     submitBtn.pack(pady=30)
 
+    
+
 
 # Making page 5 (leaderboard Page)
 def leaderBoardPage():
+
+
     page5 = Frame(mainFrame,bg=bgColour)
     page5.pack(expand=1,fill=BOTH)
 
@@ -407,7 +409,7 @@ def leaderBoardPage():
 
 
 
-
+# Binds the enter key to do the submit() function
 window.bind('<Return>',submit)
 
 menuPage()
