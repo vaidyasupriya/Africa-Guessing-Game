@@ -126,7 +126,7 @@ def menuPage():
                   text='AFRICA QUIZ',
                   font=('Comic Sans',50,'bold'),
                   bg=bgColour,
-                  fg=fontColour).pack(pady=80)
+                  fg=fontColour).pack(pady=40,expand=1)
 
 
     # Making A grid for all of the Buttons
@@ -174,7 +174,7 @@ def menuPage():
     quitBtn.grid(row=2,column=0,sticky='nsew',pady=5)
 
 
-    pg1btnGrid.pack()
+    pg1btnGrid.pack(expand=1)
 
 
 
@@ -240,7 +240,7 @@ def resultsPage():
                              font=('Comic Sans',30,'bold'),
                              background=bgColour,
                              foreground=fontColour)
-    scoreNumberLabel.pack(pady=20)
+    scoreNumberLabel.pack(pady=40,expand=1)
     
 
     countryListFrame = Frame(page3,bg=bgColour)
