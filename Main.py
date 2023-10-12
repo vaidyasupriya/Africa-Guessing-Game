@@ -256,28 +256,18 @@ def resultsPage():
     page4 =  Frame(mainFrame,bg=bgColour)
     page4.pack(expand=1,fill=BOTH)
 
-    scoreFrame = Frame(page4,bg=bgColour)
-    scoreFrame.columnconfigure(0,weight=2)
-    scoreFrame.columnconfigure(1,weight=1)
-
-    scoreTextLabel = Label(scoreFrame,text='SCORE: ',
-                           font=('Comic Sans',30,'bold'),
-                           background=bgColour,
-                           foreground=fontColour)
     
-    scoreNumberLabel = Label(scoreFrame,text=(f'{str(len(inputs))}/54'),
+    scoreNumberLabel = Label(page4,text=(f'{str(len(inputs))}/54'),
                              font=('Comic Sans',30,'bold'),
                              background=bgColour,
                              foreground=fontColour)
+    scoreNumberLabel.pack(pady=20)
     
     scoreFile = open('scores','a')
     scoreFile.writelines(f'{str(len(inputs))}/54\n')
     scoreFile.close
     
-    scoreTextLabel.grid(row=0,column=0)
-    scoreNumberLabel.grid(row=0,column=1)
-
-    scoreFrame.pack(pady=20)
+    
 
     countryListFrame = Frame(page4,bg=bgColour)
     countryListFrame.columnconfigure(0,weight=1)
