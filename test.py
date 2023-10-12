@@ -53,6 +53,8 @@ def submit(event):
     if (countryName in countries) and (countryName not in inputs):
         inputs.append(countryName)
 
+        liveScoreFrame.update()
+
         # Checks for the next available on the grid
         if columnCounter>2:
             columnCounter = 0
@@ -82,6 +84,8 @@ def deletePage():
 def openPage(page):
     deletePage()
     page()
+
+
 
 
 
@@ -155,50 +159,37 @@ def menuPage():
     pg1btnGrid.pack()
 
 
-
-
-# Makes Page 2 (game page)
 def gamePage():
 
+    global liveScoreFrame
     global countryEntry
     global tableFrame
 
     page2 = Frame(mainFrame,bg=bgColour)
     page2.pack(expand=1,fill=BOTH)
 
-    page2upper = Frame(page2,bg=bgColour)
-    page2upper.columnconfigure(0,weight=1)
-    page2upper.columnconfigure(1,weight=5)
-    page2upper.pack(expand=1,fill=X)
+    liveScoreFrame = Frame(page2,bg=bgColour)
+    liveScoreFrame.pack()
 
-    tableFrame = Frame(page2,bg=bgColour)
-    tableFrame.columnconfigure(0,weight=1)
-    tableFrame.columnconfigure(1,weight=1)
-    tableFrame.columnconfigure(2,weight=1)
-    tableFrame.pack(expand=1,fill=BOTH)
+    liveScore = Label(liveScoreFrame,
+                      text=(f'{len(inputs)}/54'),
+                      font=('Comic Sans',20,'bold'),
+                      bg=bgColour,
+                      fg=fontColour)
+    liveScore.pack(pady=5)
 
-    pg2Title = Label(page2, 
-                  text='Enter African Country',
-                  font=('Comic Sans',30,'bold'),
-                  bg=bgColour,
-                  fg=fontColour)
-    pg2Title.grid(row=0,column=1,pady=20)
+    page2title = Label(page2,
+                       text='Enter African Country',
+                       font=('Comic Sans',20,'bold'),
+                       bg=bgColour,
+                       fg=fontColour)
+    page2title.pack(pady=5)
 
-
-    # Adding input box for country names
     countryEntry = Entry(page2,
                          font=('Comic Sans',20))
-    countryEntry.pack()
+    countryEntry.pack(pady=5)
 
-    
-    #Making a grid for all of the buttons
-    pg2btnGrid = Frame(page2,bg=bgColour)
-
-    pg2btnGrid.columnconfigure(0, weight=1)
-    pg2btnGrid.columnconfigure(1, weight=1)
-
-
-    resetBtn = Button(pg2btnGrid,
+    resetBtn = Button(page2,
                      text='FINISH',
                      font=('Comic Sans', 20),
                      width=10,
@@ -208,10 +199,17 @@ def gamePage():
                      relief=FLAT,
                      command=lambda: openPage(resultsPage))
     
-    resetBtn.grid(row=0,column=0,sticky='nsew',padx=5,pady=20)
+    resetBtn.pack(pady=5)
 
-    pg2btnGrid.pack()
+    tableFrame = Frame(page2,bg=bgColour)
+    tableFrame.columnconfigure(0,weight=1)
+    tableFrame.columnconfigure(1,weight=1)
+    tableFrame.columnconfigure(2,weight=1)
+    tableFrame.pack(expand=1,fill=BOTH)
 
+
+
+# Makes Page 2 (game page)
 
 
 # Making page 4 (score page)
