@@ -45,7 +45,7 @@ mainFrame.pack(expand=1,fill=BOTH)
 
 
 # User Name entry function
-def nameSubmit():
+def nameSubmit(event):
     userName = nameEntry.get()
     score = len(inputs)
     if score < 10:
@@ -55,7 +55,7 @@ def nameSubmit():
     scoreFile = open('scores','a')
     scoreFile.writelines(record)
     scoreFile.close
-    openPage(menuPage)
+    openPage(leaderBoardPage)
     
 
 
@@ -184,6 +184,9 @@ def menuPage():
 
 # Makes Page 2 (game page)
 def gamePage():
+
+    window.unbind('<Return>')
+    window.bind('<Return>',submit)
 
     global liveScore
     global countryEntry
@@ -315,6 +318,9 @@ def resultsPage():
 
 def saveResultsPage():
 
+    window.unbind('<Return>')
+    window.bind('<Return>',nameSubmit)
+
     global nameEntry
 
     page4 = Frame(mainFrame,bg=bgColour)
@@ -415,7 +421,6 @@ def leaderBoardPage():
 
 
 # Binds the enter key to do the submit() function
-window.bind('<Return>',submit)
 
 menuPage()
 window.mainloop()
