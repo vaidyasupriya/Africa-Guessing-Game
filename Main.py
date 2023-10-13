@@ -48,7 +48,10 @@ mainFrame.pack(expand=1,fill=BOTH)
 def nameSubmit():
     userName = nameEntry.get()
     score = len(inputs)
-    record = f'{score},{userName}\n'
+    if score < 10:
+        record = f'0{score},{userName}\n'
+    else:
+        record = f'{score},{userName}\n'
     scoreFile = open('scores','a')
     scoreFile.writelines(record)
     scoreFile.close
@@ -111,6 +114,8 @@ def openPage(page):
 def menuPage():
 
     global inputs
+    global rowCounter
+    global columnCounter
 
     rowCounter = 0
     columnCounter = 0
