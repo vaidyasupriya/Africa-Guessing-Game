@@ -346,24 +346,14 @@ def saveResultsPage():
                        font=('Comic Sans',30,'bold'),
                        fg=fontColour,
                        bg=bgColour)
-    page4Title.pack(pady=20)
+    page4Title.pack(pady=20,expand=1)
 
 
     nameEntry = Entry(page4,
                       font=('Comic Sans',20))
-    nameEntry.pack(pady=20)
+    nameEntry.pack(pady=20,expand=1)
 
-    submitBtn = Button(page4,
-                       text='SUBMIT',
-                       font=('Comic Sans', 20),
-                       width=10,
-                       fg=fontColour,
-                       bg=btnStaticColour,
-                       activebackground=btnActiveColour,
-                       relief=FLAT,
-                       command= nameSubmit)
-    
-    submitBtn.pack(pady=30)
+
 
     
 
