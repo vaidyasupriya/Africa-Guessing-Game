@@ -18,7 +18,7 @@ btnStaticColour = '#054D82'
 btnActiveColour = '#098EF0'
 fontColour = '#FAFFF8'
 correctFontColour = '#43FFAF'
-wrongFontColour = "#FF4D50"
+wrongFontColour = '#FF4D50'
 
 
 
@@ -55,9 +55,9 @@ def nameSubmit(event):
     userName = nameEntry.get()
     score = len(inputs)
     if score < 10:
-        record = f'0{score},{userName}\n'
+        record = f'0{score},{userName},{gameMode}\n'
     else:
-        record = f'{score},{userName}\n'
+        record = f'{score},{userName},{gameMode}\n'
     scoreFile = open('scores','a')
     scoreFile.writelines(record)
     scoreFile.close
@@ -69,6 +69,8 @@ def nameSubmit(event):
 def submit(event): 
     global rowCounter
     global columnCounter
+    global totalLives
+    global livesLeft
 
     # Fetches user input and capitalises it and clears the entry box
     countryName = (countryEntry.get()).upper()
@@ -101,7 +103,58 @@ def submit(event):
         columnCounter += 1
         if len(inputs)==54:
             openPage(resultsPage)
+    elif (lives == True) and (countryName not in inputs):
+        totalLives -= 1
+        livesLeft.config(text=(f'Lives: {totalLives}'))
 
+        if columnCounter>2:
+            columnCounter = 0
+            rowCounter += 1
+        
+        countryNameLabel = Label(tableFrame,
+                                 text=countryName,
+                                 font=('Comic Sans',15,'bold'),
+                                 foreground=wrongFontColour,
+                                 background=bgColour)
+        
+        # Adds that label to the next available space on the grid
+        countryNameLabel.grid(column=columnCounter,
+                              row=rowCounter,
+                              sticky='nsew',
+                              padx=10)
+
+        columnCounter += 1
+        if totalLives == 0:
+            openPage(resultsPage)
+
+
+def difficultyEasy():
+    global lives
+    global gameMode
+    gameMode = "EASY"
+    lives = False
+    
+    openPage(gamePage)
+
+def difficultyMedium():
+    global totalLives
+    global lives
+    global gameMode
+    gameMode = "MEDIUM"
+
+    lives = True
+    totalLives = 5
+    openPage(gamePage)
+
+def difficultyHard():
+    global totalLives
+    global lives
+    global gameMode
+    gameMode = "HARD"
+
+    lives = True
+    totalLives = 1
+    openPage(gamePage)
 
 
 # A function the destroys the current page before displaying the next page
@@ -132,27 +185,27 @@ def menuPage():
     inputs = []
 
     # Setting Up Page 1
-    page1 = Frame(mainFrame)
+    page1 = Frame(mainFrame,bg=bgColour)
     page1.pack(expand=1,fill=BOTH)
-    page1.config(bg=bgColour)
 
-    pg1Title = Label(page1, 
+    page1Title = Label(page1, 
                   text='AFRICA QUIZ',
                   font=('Comic Sans',50,'bold'),
                   bg=bgColour,
-                  fg=fontColour).pack(pady=40,expand=1)
+                  fg=fontColour)
+    page1Title.pack(pady=40,expand=1)
 
 
     # Making A grid for all of the Buttons
-    pg1btnGrid = Frame(page1,bg=bgColour,pady=100)
+    page1btnGrid = Frame(page1,bg=bgColour,pady=100)
 
-    pg1btnGrid.columnconfigure(0, weight=1)
-    pg1btnGrid.columnconfigure(1, weight=1)
-    pg1btnGrid.columnconfigure(2, weight=1)
+    page1btnGrid.columnconfigure(0, weight=1)
+    page1btnGrid.columnconfigure(1, weight=1)
+    page1btnGrid.columnconfigure(2, weight=1)
 
 
     # Making Buttons and assigning them their properties and functions
-    playBtn = Button(pg1btnGrid,
+    playBtn = Button(page1btnGrid,
                       text='PLAY',
                       font=('Comic Sans',20),
                       width=20,
@@ -160,9 +213,9 @@ def menuPage():
                       bg=btnStaticColour,
                       activebackground=btnActiveColour,
                       relief=FLAT,
-                      command=lambda: openPage(gamePage))
+                      command=lambda: openPage(dificultyPage))
 
-    scoresBtn = Button(pg1btnGrid,
+    scoresBtn = Button(page1btnGrid,
                        text='SCORE',
                        font=('Comic Sans',20),
                        width=20,
@@ -172,7 +225,7 @@ def menuPage():
                        relief=FLAT,
                        command=lambda: openPage(leaderBoardPage))
 
-    quitBtn = Button(pg1btnGrid,
+    quitBtn = Button(page1btnGrid,
                      text='QUIT',
                      font=('Comic Sans', 20),
                      width=20,
@@ -188,12 +241,61 @@ def menuPage():
     quitBtn.grid(row=2,column=0,sticky='nsew',pady=5)
 
 
-    pg1btnGrid.pack(expand=1)
+    page1btnGrid.pack(expand=1)
 
+# Makes Page 2 (dificulty page)
+def dificultyPage():
 
+    # Setting Up page 2
+    page2 = Frame(mainFrame,bg=bgColour)
+    page2.pack(expand=1,fill=BOTH)
 
+    page2Title = Label(page2, 
+                  text='CHOOSE DIFICULTY',
+                  font=('Comic Sans',40,'bold'),
+                  bg=bgColour,
+                  fg=fontColour)
+    
+    page2Title.pack(pady=30)
 
-# Makes Page 2 (game page)
+    # Making A grid for all of the Buttons
+    page2btnGrid = Frame(page2,bg=bgColour,pady=100)
+
+    page2btnGrid.rowconfigure(0, weight=1)
+    page2btnGrid.rowconfigure(1, weight=1)
+    page2btnGrid.rowconfigure(2, weight=1)
+
+    easy = Button(page2btnGrid,
+                  text="EASY",
+                  font=('Comic Sans',20),
+                  width=20,
+                  fg=fontColour,
+                  bg='#00BB00',
+                  command=difficultyEasy)
+    
+    medium = Button(page2btnGrid,
+                  text="MEDIUM",
+                  font=('Comic Sans',20),
+                  width=20,
+                  fg=fontColour,
+                  bg='#BBB000',
+                  command=difficultyMedium)
+    
+    hard = Button(page2btnGrid,
+                  text="HARD",
+                  font=('Comic Sans',20),
+                  width=20,
+                  fg=fontColour,
+                  bg='#BB0000',
+                  command=difficultyHard)
+
+    easy.grid(row=0,column=0,sticky='nsew',pady=5)
+    medium.grid(row=1,column=0,sticky='nsew',pady=5)
+    hard.grid(row=2,column=0,sticky='nsew',pady=5)
+
+    page2btnGrid.pack(expand=1)
+
+# Makes Page 3 (game page)
 def gamePage():
 
     # Attaching key binds to functions
@@ -201,35 +303,57 @@ def gamePage():
     window.bind('<Return>',submit)
 
     global liveScore
+    global livesLeft
     global countryEntry
     global tableFrame
 
-    # Setting up page 2
-    page2 = Frame(mainFrame,bg=bgColour)
-    page2.pack(expand=1,fill=BOTH)
+    # Setting up page 3
+    page3 = Frame(mainFrame,bg=bgColour)
+    page3.pack(expand=1,fill=BOTH)
 
-    liveScoreFrame = Frame(page2,bg=bgColour)
-    liveScoreFrame.pack()
 
-    liveScore = Label(liveScoreFrame,
+
+    updatingFrame = Frame(page3,bg=bgColour)
+    updatingFrame.pack(fill=X)
+
+    if lives == True:
+        updatingFrame.columnconfigure(0,weight=1)
+        updatingFrame.columnconfigure(1,weight=1)
+
+        livesLeft = Label(updatingFrame,
+                      text=(f'Lives: {totalLives}'),
+                      font=('Comic Sans',20,'bold'),
+                      bg=bgColour,
+                      fg=fontColour)
+        
+        liveScore = Label(updatingFrame,
                       text=(f'{len(inputs)}/54'),
                       font=('Comic Sans',20,'bold'),
                       bg=bgColour,
                       fg=fontColour)
-    liveScore.pack(pady=5)
+        
+        livesLeft.grid(row=0,column=0,sticky='nsew',pady=5)
+        liveScore.grid(row=0,column=1,sticky='nsew',pady=5)
+    else:
+        liveScore = Label(updatingFrame,
+                          text=(f'{len(inputs)}/54'),
+                          font=('Comic Sans',20,'bold'),
+                          bg=bgColour,
+                          fg=fontColour)
+        liveScore.pack(pady=5)
 
-    page2Title = Label(page2,
+    page3Title = Label(page3,
                        text='Enter African Country',
                        font=('Comic Sans',20,'bold'),
                        bg=bgColour,
                        fg=fontColour)
-    page2Title.pack(pady=5)
+    page3Title.pack(pady=5)
 
-    countryEntry = Entry(page2,
+    countryEntry = Entry(page3,
                          font=('Comic Sans',20))
     countryEntry.pack(pady=10)
 
-    resetBtn = Button(page2,
+    resetBtn = Button(page3,
                      text='FINISH',
                      font=('Comic Sans', 20),
                      width=10,
@@ -242,29 +366,29 @@ def gamePage():
     resetBtn.pack(pady=15)
 
     # Makes Frame for Country names
-    tableFrame = Frame(page2,bg=bgColour)
+    tableFrame = Frame(page3,bg=bgColour)
     tableFrame.columnconfigure(0,weight=1)
     tableFrame.columnconfigure(1,weight=1)
     tableFrame.columnconfigure(2,weight=1)
     tableFrame.pack(expand=1,fill=BOTH)
 
 
-# Makes page 3 (results page)
+# Makes page 4 (results page)
 def resultsPage():
 
-    # Setting up page 3
-    page3 =  Frame(mainFrame,bg=bgColour)
-    page3.pack(expand=1,fill=BOTH)
+    # Setting up page 4
+    page4 =  Frame(mainFrame,bg=bgColour)
+    page4.pack(expand=1,fill=BOTH)
 
     
-    scoreNumberLabel = Label(page3,text=(f'{str(len(inputs))}/54'),
+    scoreNumberLabel = Label(page4,text=(f'{str(len(inputs))}/54'),
                              font=('Comic Sans',30,'bold'),
                              background=bgColour,
                              foreground=fontColour)
     scoreNumberLabel.pack(pady=40,expand=1)
     
 
-    countryListFrame = Frame(page3,bg=bgColour)
+    countryListFrame = Frame(page4,bg=bgColour)
     countryListFrame.columnconfigure(0,weight=1)
     countryListFrame.columnconfigure(1,weight=1)
     countryListFrame.columnconfigure(2,weight=1)
@@ -299,11 +423,11 @@ def resultsPage():
 
     countryListFrame.pack(fill=BOTH,expand=1)
 
-    page3BtnGrid = Frame(page3,bg=bgColour)
-    page3BtnGrid.columnconfigure(0,weight=1)
-    page3BtnGrid.columnconfigure(1,weight=1)
-    page3BtnGrid.pack(expand=1,fill=X)
-    menuBtn = Button(page3BtnGrid,
+    page4BtnGrid = Frame(page4,bg=bgColour)
+    page4BtnGrid.columnconfigure(0,weight=1)
+    page4BtnGrid.columnconfigure(1,weight=1)
+    page4BtnGrid.pack(expand=1,fill=X)
+    menuBtn = Button(page4BtnGrid,
                       text='MENU',
                       font=('Comic Sans',20),
                       width=20,
@@ -315,7 +439,7 @@ def resultsPage():
     
     menuBtn.grid(row=0,column=0,pady=20)
 
-    saveBtn = Button(page3BtnGrid,
+    saveBtn = Button(page4BtnGrid,
                       text='SAVE',
                       font=('Comic Sans',20),
                       width=20,
@@ -329,7 +453,7 @@ def resultsPage():
 
 
 
-# Making page 4 (Save Results Page)
+# Making page 5 (Save Results Page)
 
 def saveResultsPage():
 
@@ -340,18 +464,18 @@ def saveResultsPage():
     global nameEntry
 
     # Setting up page 4
-    page4 = Frame(mainFrame,bg=bgColour)
-    page4.pack(expand=1,fill=BOTH)
+    page5 = Frame(mainFrame,bg=bgColour)
+    page5.pack(expand=1,fill=BOTH)
 
-    page4Title = Label(page4,
+    page5Title = Label(page5,
                        text='Enter Your Name',
                        font=('Comic Sans',30,'bold'),
                        fg=fontColour,
                        bg=bgColour)
-    page4Title.pack(pady=20,expand=1)
+    page5Title.pack(pady=20,expand=1)
 
 
-    nameEntry = Entry(page4,
+    nameEntry = Entry(page5,
                       font=('Comic Sans',20))
     nameEntry.pack(pady=20,expand=1)
 
@@ -360,19 +484,19 @@ def saveResultsPage():
     
 
 
-# Making page 5 (leaderboard Page)
+# Making page 6 (leaderboard Page)
 def leaderBoardPage():
 
     # Setting up page 5
-    page5 = Frame(mainFrame,bg=bgColour)
-    page5.pack(expand=1,fill=BOTH)
+    page6 = Frame(mainFrame,bg=bgColour)
+    page6.pack(expand=1,fill=BOTH)
 
-    page5Title = Label(page5,
+    page6Title = Label(page6,
                        text='LEADER BOARD',
                        font=('Comic Sans',30,'bold'),
                        fg=fontColour,
                        bg=bgColour)
-    page5Title.pack(pady=20)
+    page6Title.pack(pady=20)
 
 
     style = ttk.Style()
@@ -392,27 +516,30 @@ def leaderBoardPage():
                     font=('Comic Sans',15))
     style.map("Treeview")
 
-    tree = ttk.Treeview(page5)
+    tree = ttk.Treeview(page6)
 
-    tree['columns'] = ('Name','Score')
+    tree['columns'] = ('Name','Score','Dificulty')
     tree.column('#0',width=0,stretch=NO)
     tree.column('Name',anchor=CENTER)
     tree.column('Score',anchor=CENTER)
+    tree.column('Dificulty',anchor=CENTER)
 
     tree.heading('#0',text='',anchor=W)
     tree.heading('Name',text='Name',anchor=CENTER)
     tree.heading('Score',text='Score',anchor=CENTER)
+    tree.heading('Dificulty',text='Dificulty',anchor=CENTER)
 
     scoreFile = open('scores','r')
     records = scoreFile.readlines()
     records.sort(reverse=True)
     for i in range(len(records)):
         record = records[i].split(',')
-        tree.insert(parent='',index=END, iid=i, text='',values=(record[1][:-1],(f'{record[0]}/54')))
+        print(record)
+        tree.insert(parent='',index=END, iid=i, text='',values=(record[1],(f'{record[0]}/54'),(f'{record[2][:-1]}')))
 
     tree.pack(expand=1,fill=BOTH)
 
-    menuBtn = Button(page5,
+    menuBtn = Button(page6,
                       text='MENU',
                       font=('Comic Sans',20),
                       width=20,
