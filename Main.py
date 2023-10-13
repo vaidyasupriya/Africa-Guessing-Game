@@ -10,6 +10,8 @@ for country in OgList:
     countries.append((country[:-1]).upper())
 
 
+
+
 # Some Colours
 bgColour = '#121212'
 btnStaticColour = '#293556'
@@ -19,11 +21,13 @@ fontColour = '#cadeed'
 
 
 
-
 # Setting Up Main Window
 window = Tk()
 window.geometry('1200x800')
 window.title("Africa Game")
+
+
+
 
 # Window.resizable(False,False)
 window.config(bg=bgColour)
@@ -96,10 +100,14 @@ def submit(event):
         if len(inputs)==54:
             openPage(resultsPage)
 
+
+
 # A function the destroys the current page before displaying the next page
 def deletePage():
     for frame in mainFrame.winfo_children():
         frame.destroy()
+
+
 
 # Opens the next page
 def openPage(page):
@@ -120,6 +128,7 @@ def menuPage():
     rowCounter = 0
     columnCounter = 0
     inputs = []
+
     # Setting Up Page 1
     page1 = Frame(mainFrame)
     page1.pack(expand=1,fill=BOTH)
@@ -185,6 +194,7 @@ def menuPage():
 # Makes Page 2 (game page)
 def gamePage():
 
+    # Attaching key binds to functions
     window.unbind('<Return>')
     window.bind('<Return>',submit)
 
@@ -192,6 +202,7 @@ def gamePage():
     global countryEntry
     global tableFrame
 
+    # Setting up page 2
     page2 = Frame(mainFrame,bg=bgColour)
     page2.pack(expand=1,fill=BOTH)
 
@@ -228,6 +239,7 @@ def gamePage():
     
     resetBtn.pack(pady=15)
 
+    # Makes Frame for Country names
     tableFrame = Frame(page2,bg=bgColour)
     tableFrame.columnconfigure(0,weight=1)
     tableFrame.columnconfigure(1,weight=1)
@@ -238,6 +250,7 @@ def gamePage():
 # Makes page 3 (results page)
 def resultsPage():
 
+    # Setting up page 3
     page3 =  Frame(mainFrame,bg=bgColour)
     page3.pack(expand=1,fill=BOTH)
 
@@ -318,11 +331,13 @@ def resultsPage():
 
 def saveResultsPage():
 
+    # Attaching key binds to functions
     window.unbind('<Return>')
     window.bind('<Return>',nameSubmit)
 
     global nameEntry
 
+    # Setting up page 4
     page4 = Frame(mainFrame,bg=bgColour)
     page4.pack(expand=1,fill=BOTH)
 
@@ -356,7 +371,7 @@ def saveResultsPage():
 # Making page 5 (leaderboard Page)
 def leaderBoardPage():
 
-
+    # Setting up page 5
     page5 = Frame(mainFrame,bg=bgColour)
     page5.pack(expand=1,fill=BOTH)
 
