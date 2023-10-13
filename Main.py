@@ -60,7 +60,7 @@ def nameSubmit(event):
 
 
 # Country Name entry function
-def submit(event):
+def submit(event): 
     global rowCounter
     global columnCounter
 
