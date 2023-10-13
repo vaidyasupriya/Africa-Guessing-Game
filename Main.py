@@ -55,7 +55,7 @@ def nameSubmit(event):
     scoreFile = open('scores','a')
     scoreFile.writelines(record)
     scoreFile.close
-    openPage(leaderBoardPage)
+    openPage(menuPage)
     
 
 
