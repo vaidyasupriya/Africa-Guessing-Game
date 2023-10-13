@@ -13,10 +13,12 @@ for country in OgList:
 
 
 # Some Colours
-bgColour = '#121212'
-btnStaticColour = '#293556'
-btnActiveColour = '#2e4583'
-fontColour = '#cadeed'
+bgColour = '#262A33'
+btnStaticColour = '#054D82'
+btnActiveColour = '#098EF0'
+fontColour = '#FAFFF8'
+correctFontColour = '#43FFAF'
+wrongFontColour = "#FF4D50"
 
 
 
@@ -87,7 +89,7 @@ def submit(event):
         countryNameLabel = Label(tableFrame,
                                  text=countryName,
                                  font=('Comic Sans',15,'bold'),
-                                 foreground='green',
+                                 foreground=correctFontColour,
                                  background=bgColour)
         
         # Adds that label to the next available space on the grid
@@ -274,13 +276,13 @@ def resultsPage():
         if country in inputs:
             countryLabel = Label(countryListFrame,
                                  text=country,
-                                 foreground='green',
+                                 foreground=correctFontColour,
                                  font=('Comic Sans',15,'bold'),
                                  bg=bgColour)
         else:
             countryLabel = Label(countryListFrame,
                                  text=country,
-                                 foreground='red',
+                                 foreground=wrongFontColour,
                                  font=('Comic Sans',15,'bold'),
                                  bg=bgColour)
         
